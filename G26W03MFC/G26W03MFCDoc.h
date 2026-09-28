@@ -8,22 +8,16 @@
 
 class CG26W03MFCDoc : public CDocument
 {
+protected:
+	CArray<CPoint, CPoint> Points;
 public:
-	// 원의 중심 좌표 목록을 저장할 컨테이너
-	std::vector<CPoint> m_points;
+	int GetPointsCount() { return (int)Points.GetCount(); }
 
-	// 데이터 초기화/삭제 함수
-	void ClearPoints() {
-		m_points.clear();
-		SetModifiedFlag(TRUE); // 문서가 변경되었음을 표시
-		UpdateAllViews(NULL);  // 연결된 모든 View에 화면 갱신 요청
-	}
+	CPoint GetPoint(int index) { return Points[index]; }
 
-	// 원 좌표 추가 함수
-	void AddPoint(CPoint pt) {
-		m_points.push_back(pt);
-		SetModifiedFlag(TRUE);
-		UpdateAllViews(NULL);
+	void AddPoint(CPoint p) {
+		Points.Add(p);
+		SetModifiedFlag();
 	}
 protected:
 	CPoint Point = CPoint(-100, -100);

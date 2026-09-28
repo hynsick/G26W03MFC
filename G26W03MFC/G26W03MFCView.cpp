@@ -53,12 +53,13 @@ void CG26W03MFCView::OnDraw(CDC* pDC)
 	if (!pDoc)
 		return;
 
-	int radius = 20; // 원의 반지름 설정
+	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
+	//CPoint p = pDoc->GetPoint();
+	//pDC->Ellipse(p.x - 30, p.y - 30, p.x + 30, p.y + 30);
 
-	// Document에 저장된 모든 좌표를 순회하며 원 그리기
-	for (const auto& pt : pDoc->m_points)
-	{
-		pDC->Ellipse(pt.x - radius, pt.y - radius, pt.x + radius, pt.y + radius);
+	for (int i = 0; i < pDoc->GetPointsCount(); i++) {
+		CPoint p = pDoc->GetPoint(i);
+		pDC->Ellipse(p.x - 30, p.y - 30, p.x + 30, p.y + 30);
 	}
 }
 
@@ -100,10 +101,8 @@ CG26W03MFCDoc* CG26W03MFCView::GetDocument() const // 디버그되지 않은 버
 // 마우스 왼쪽 버튼 클릭: 좌표 추가 및 화면 갱신
 void CG26W03MFCView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	CG26W03MFCDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
-
-	pDoc->AddPoint(point); // Document에 새로운 좌표 추가
+	GetDocument()->AddPoint(point);
+	Invalidate();
 
 	CView::OnLButtonDown(nFlags, point);
 }
@@ -111,10 +110,4 @@ void CG26W03MFCView::OnLButtonDown(UINT nFlags, CPoint point)
 // 마우스 오른쪽 버튼 클릭: 전체 삭제
 void CG26W03MFCView::OnRButtonDown(UINT nFlags, CPoint point)
 {
-	CG26W03MFCDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
-
-	pDoc->ClearPoints(); // Document에 저장된 원 좌표 전체 삭제
-
-	CView::OnRButtonDown(nFlags, point);
 }
