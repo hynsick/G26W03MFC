@@ -110,4 +110,7 @@ void CG26W03MFCView::OnLButtonDown(UINT nFlags, CPoint point)
 // 마우스 오른쪽 버튼 클릭: 전체 삭제
 void CG26W03MFCView::OnRButtonDown(UINT nFlags, CPoint point)
 {
+	GetDocument()->RemoveLast();
+	Invalidate();
+
 }
