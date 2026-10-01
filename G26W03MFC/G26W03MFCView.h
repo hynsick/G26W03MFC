@@ -15,6 +15,13 @@ public:
 
 	// 작업입니다.
 public:
+	// 특성
+protected:
+	int m_nRadius = 30; // 원의 기본 반지름 크기
+
+	// 생성된 메시지 맵 함수
+public:
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 
 	// 재정의입니다.
 public:

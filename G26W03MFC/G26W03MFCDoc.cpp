@@ -23,6 +23,7 @@
 IMPLEMENT_DYNCREATE(CG26W03MFCDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CG26W03MFCDoc, CDocument)
+
 END_MESSAGE_MAP()
 
 
@@ -129,4 +130,3 @@ void CG26W03MFCDoc::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 
-// CG26W03MFCDoc 명령

@@ -29,6 +29,7 @@ BEGIN_MESSAGE_MAP(CG26W03MFCView, CView)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_RBUTTONDOWN()
 	ON_WM_MOUSEMOVE()
+	ON_WM_MOUSEWHEEL()
 END_MESSAGE_MAP()
 
 // CG26W03MFCView 생성/소멸
@@ -60,7 +61,8 @@ void CG26W03MFCView::OnDraw(CDC* pDC)
 
 	for (int i = 0; i < pDoc->GetPointsCount(); i++) {
 		CPoint p = pDoc->GetPoint(i);
-		pDC->Ellipse(p.x - 30, p.y - 30, p.x + 30, p.y + 30);
+		// 고정값 30 대신 m_nRadius 사용
+		pDC->Ellipse(p.x - m_nRadius, p.y - m_nRadius, p.x + m_nRadius, p.y + m_nRadius);
 	}
 }
 
@@ -123,4 +125,20 @@ void CG26W03MFCView::OnMouseMove(UINT nFlags, CPoint point)
 		Invalidate();
 	}
 	CView::OnMouseMove(nFlags, point);
+}
+// 휠 굴릴 때 크기 조절 함수
+BOOL CG26W03MFCView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	if (zDelta > 0) {
+		m_nRadius += 5; // 휠을 위로 굴리면 커짐
+	}
+	else {
+		m_nRadius -= 5; // 휠을 아래로 굴리면 작아짐
+	}
+
+	// 최소 크기 제한
+	if (m_nRadius < 5) m_nRadius = 5;
+
+	Invalidate(); // 화면 갱신
+	return CView::OnMouseWheel(nFlags, zDelta, pt);
 }
